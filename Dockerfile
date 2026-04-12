@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Copy Spring Boot module (your structure)
 COPY localserviceshub-services/pom.xml ./pom.xml
-COPY localserviceshub-services/src ./src
+#COPY localserviceshub-services/src ./src
 
 # Run Maven build (YOUR REQUEST)
 RUN mvn clean install -DskipTests

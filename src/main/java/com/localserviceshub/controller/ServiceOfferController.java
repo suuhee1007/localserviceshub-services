@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/services")
-@CrossOrigin(origins = {"http://localhost:3000", "https://localserviceshub-2gk0mrrpr-suuhee1007s-projects.vercel.app"})
+@CrossOrigin(origins = {"http://localhost:3000","https://localserviceshub-portal.vercel.app", "https://localserviceshub-2gk0mrrpr-suuhee1007s-projects.vercel.app"})
 public class ServiceOfferController {
 
     private final ServiceOfferRepository repository;

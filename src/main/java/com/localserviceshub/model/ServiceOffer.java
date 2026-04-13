@@ -24,6 +24,9 @@ public class ServiceOffer {
     private String city;
 
     @Column(nullable = false)
+    private String state;
+
+    @Column(nullable = false)
     private String zipCode;
 
     @Column(nullable = false)
@@ -73,6 +76,14 @@ public class ServiceOffer {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getZipCode() {

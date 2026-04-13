@@ -29,6 +29,7 @@ public class ServiceOfferController {
         offer.setServiceDescription(request.getServiceDescription());
         offer.setServiceType(request.getServiceType());
         offer.setCity(request.getCity());
+        offer.setState(request.getState());
         offer.setZipCode(request.getZipCode());
         offer.setAddress(request.getAddress());
         offer.setCreatedAt(Instant.now());
@@ -37,11 +38,37 @@ public class ServiceOfferController {
     }
 
     @GetMapping
-    public List<ServiceOffer> listServices(@RequestParam(value = "type", required = false) String type) {
-        if (type == null || type.isBlank()) {
-            return repository.findAll();
+    public List<ServiceOffer> listServices(
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city
+    ) {
+        boolean hasType = type != null && !type.isBlank();
+        boolean hasState = state != null && !state.isBlank();
+        boolean hasCity = city != null && !city.isBlank();
+
+        if (hasType && hasState && hasCity) {
+            return repository.findByServiceTypeIgnoreCaseAndStateIgnoreCaseAndCityIgnoreCase(type, state, city);
         }
-        return repository.findByServiceTypeIgnoreCase(type);
+        if (hasType && hasState) {
+            return repository.findByServiceTypeIgnoreCaseAndStateIgnoreCase(type, state);
+        }
+        if (hasType && hasCity) {
+            return repository.findByServiceTypeIgnoreCaseAndCityIgnoreCase(type, city);
+        }
+        if (hasState && hasCity) {
+            return repository.findByStateIgnoreCaseAndCityIgnoreCase(state, city);
+        }
+        if (hasState) {
+            return repository.findByStateIgnoreCase(state);
+        }
+        if (hasCity) {
+            return repository.findByCityIgnoreCase(city);
+        }
+        if (hasType) {
+            return repository.findByServiceTypeIgnoreCase(type);
+        }
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
